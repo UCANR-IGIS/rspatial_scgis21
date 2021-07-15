@@ -358,7 +358,7 @@ pre {
 <p>A good way to complete the workshop exercises is to use <a href="https://rstudio.cloud" target="_blank"><strong>RStudio Cloud</strong></a>. RStudio Cloud is a virtual environment that allows you to run R in a browser. If you use RStudio Cloud for the workshop, you won’t have to install any software or data because the instructor will prepare a virtual machine image that you can ‘clone’. It functions nearly identical to RStudio Desktop, and works pretty well as long as you have reasonably good internet connection. Using RStudio Cloud requires setting up an account (free).</p>
 <p>To use RStudio Cloud for the workshop, login to your account and then click on this link:</p>
 <p class="indented2">
-<em>[coming soon]</em>
+<a href='https://rstudio.cloud/project/2709500' target='_blank' ref='noopener' style='font-family:monospace;'>https://rstudio.cloud/project/2709500</a>
 </p>
 <p>This will open a RStudio Cloud project with all the required packages and data ready to go (you’ll get the scripts from the slide deck during the workshop). After the project opens, click the ‘<strong>Save a Permanent Copy</strong>’ button in the toolbar, which will make a copy of the project in your own workspace.</p>
 <p><img src="images/rstudio-cloud_save-perm-copy_334x58.png" style="display:block; margin:1em auto; border:1px solid gray;" /></p>
@@ -402,8 +402,9 @@ if (length(pkgs_missing)) install.packages(pkgs_missing, dependencies=TRUE)</cod
 <p><br />
 </p>
 <p>5. <strong>Set the working directory in RStudio to the workshop folder</strong></p>
-<p>In RStudio, set the working directory to workshop folder you just created. For example you can run the <code>setwd()</code> command (substituting your own folder location, of course!):</p>
-<pre class="r klippy copyme"><code>setwd(&quot;C:\\Users\\Andy\\Desktop\\Spatial R Workshop&quot;)</code></pre>
+<p>In RStudio, set the working directory to workshop folder you just created. For example you can run the <code>setwd()</code> command (substituting your <strong>own folder location</strong>, of course!):</p>
+<pre class="r klippy copyme"><code>## Example of setting the working directory:
+setwd(&quot;C:\\Users\\Andy\\Desktop\\Spatial R Workshop&quot;)</code></pre>
 <p><br />
 </p>
 <p><strong>Windows users</strong>: please note that R requires you to use double-backslashes in path names</p>
@@ -415,6 +416,9 @@ if (length(pkgs_missing)) install.packages(pkgs_missing, dependencies=TRUE)</cod
 <p>6. <strong>Download the Workshop Data</strong></p>
 <p>To download the workshop data (~175MB), open RStudio and run the following command (substituting the workshop folder you created above).</p>
 <pre class="r klippy copyme"><code>usethis::use_course(&quot;bit.ly/rspatial-data&quot;, destdir = &quot;C:\\Users\\Andy\\Desktop\\Spatial R Workshop&quot;)</code></pre>
+<p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
+<strong>TIP</strong>: To download the data into the current working directory, you can run:<br/> <code>usethis::use_course("bit.ly/rspatial-data", destdir = getwd())</code>
+</p>
 <p>This command will 1) download a zip file with a folder called <code>data</code>, 2) extract the contents to the <code>destdir</code> directory, 3) ask you if want to delete the zip file (ok to say yes).</p>
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
 <strong>Manual Method</strong>: You can manually download the data from <a href="http://bit.ly/rspatial-data">here</a>. Unzip the ‘data’ folder to the workshop folder.
@@ -448,7 +452,7 @@ invisible(sapply(pts[2:4], points, asp=1, pch=16, cex=0.5, type=&quot;l&quot;))<
 <div id="zoom" class="section level2">
 <h2>Zoom</h2>
 <p>This workshop will be taught entirely online using the Zoom platform. The instructor will send you the Zoom link via a calendar invite. You can also get it from the <a href="https://scgis2021.events.whova.com" target="_blank" rel="noopener">SCGIS Conference App</a> &gt;&gt; Agenda.</p>
-<p>Please make sure you have the <a href="https://zoom.us/download" target="_blank" rel="noopener"><strong>Zoom client</strong></a> (app) installed. You can verify you have it installed if you see it in the Start Menu (Windows) or Finder (Mac). Please <strong>make sure you have the latest version</strong>, as some of the buttons and features have changed.</p>
+<p>Please make sure you have the <a href="https://zoom.us/download" target="_blank" rel="noopener"><strong>Zoom client</strong></a> (app) installed. You can verify you have it installed if you see it in the Start Menu (Windows), or Finder (Mac). Please <strong>make sure you have the latest version</strong>, as some of the buttons and features have changed.</p>
 <p style="text-align:center; font-style:italic;">
 <img src="images/zoom_update360x632x256.png" style="padding:10px; width:300px;"/><br/>Check for updates on the Zoom app
 </p>
@@ -463,7 +467,7 @@ invisible(sapply(pts[2:4], points, asp=1, pch=16, cex=0.5, type=&quot;l&quot;))<
 <div id="dual-monitors-best-option" class="section level4">
 <h4>Dual Monitors (Best Option)</h4>
 <p>If you have an <strong>external monitor</strong> for your laptop / computer, you’re all set. (Tip: turn on Zoom’s <em>dual monitors</em> option, see below). Many TVs can be used as a second monitor depending on the video connections.</p>
-<p>If you don’t have a second monitor, a <strong>tablet</strong> may come in handy for viewing the slides / speaker. The Zoom App is available for all major tablets and phones.</p>
+<p>If you don’t have a second monitor, a <strong>tablet</strong> may come in handy for viewing the slides / speaker. Zoom is available for all major tablets and phones.</p>
 <p>Note however if you watch the slides on a tablet, you should <strong>also</strong> have Zoom running on your laptop so you can take the polls, click on links in the chat window, share your screen with the instructor, etc. In that scenario, you’ll be logged into the Zoom meeting on two different devices, but only join the audio on one of the devices otherwise you may get a lot of echo!.</p>
 </div>
 </div>
@@ -471,7 +475,7 @@ invisible(sapply(pts[2:4], points, asp=1, pch=16, cex=0.5, type=&quot;l&quot;))<
 <h3>Tips for Using Zoom on a Single Screen</h3>
 <div id="tip-1.-turn-on-dual-monitors" class="section level4">
 <h4>Tip 1. Turn on ‘Dual Monitors’</h4>
-<p>The Zoom client for Windows has a ‘Dual Monitors’ option that will open up screen shares in a <strong>separate window</strong>. You don’t actually need two monitors. This option is really useful on a single monitor, because you can move and resize the screen share window anywhere you’d like (and even ‘pin’ it to stay on top, see below).</p>
+<p>The Zoom client for Windows has a ‘Dual Monitors’ option that will open up screen shares in a <strong>separate window</strong>. You don’t actually need two monitors to use this option. This option is really useful on a single monitor, because you can move and resize the screen share window anywhere you’d like (and even ‘pin’ it to stay on top, see below).</p>
 <p>To turn on Dual Monitors, click the gear icon (Settings) in the Zoom client, then check ‘Dual Monitors’.</p>
 <p><img src="images/zoom-client-setting-btn_300x522x256.png" style="display:block; margin:1em auto; border:1px solid grey;" /></p>
 <p><img src="images/zoom-client_dual-monitors_800x500x256.png" style="display:block; margin:1em auto; border:1px solid grey;" /></p>
