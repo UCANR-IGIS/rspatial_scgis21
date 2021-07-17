@@ -506,7 +506,12 @@ a.exercises {
 }
 
 p.slides_desc {
-  margin-left: 60px;
+  margin-left: 52px;
+  font-style:italic;
+  font-size:90%;
+}
+p.notebook_desc {
+  margin-left: 52px;
   font-style:italic;
   font-size:90%;
 }
