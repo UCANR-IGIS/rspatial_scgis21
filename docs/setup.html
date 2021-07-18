@@ -384,7 +384,7 @@ pkgs_req &lt;- c(&quot;sp&quot;, &quot;sf&quot;, &quot;tmap&quot;, &quot;tmaptoo
               &quot;RColorBrewer&quot;, &quot;raster&quot;, &quot;maps&quot;, &quot;tidyverse&quot;,  &quot;jsonlite&quot;, 
               &quot;rasterVis&quot;, &quot;GISTools&quot;, &quot;nngeo&quot;, &quot;lwgeom&quot;, &quot;devtools&quot;, 
               &quot;conflicted&quot;, &quot;tigris&quot;, &quot;tidycensus&quot;, &quot;stars&quot;,
-              &quot;googlesheets4&quot;, &quot;httr&quot;, &quot;rjson&quot;, &quot;RSocrata&quot;, &quot;usethis&quot;)
+              &quot;googlesheets4&quot;, &quot;httr&quot;, &quot;rjson&quot;, &quot;RSocrata&quot;, &quot;usethis&quot;, &quot;rinat&quot;)
 
 pkgs_missing &lt;- pkgs_req[!(pkgs_req %in% installed.packages()[,&quot;Package&quot;])]
 
@@ -392,22 +392,27 @@ if (length(pkgs_missing)) install.packages(pkgs_missing, dependencies=TRUE)</cod
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
 <strong>TIP</strong>: If you are prompted by the question, <strong>‘Do you want to install from sources the package which needs compilation?’</strong>, select ‘<strong>No</strong>’.
 </p>
+<p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
+<strong>TIP</strong>: If you get an error message that a package can’t be installed because it’s <strong>already loaded</strong> and can’t be stopped, <strong>restart R</strong> (Session &gt;&gt; Restart R), and try again.
+</p>
 <p><br />
 </p>
 <p>4. <strong>Create a folder for the workshop</strong></p>
 <p>Create a folder for the workshop on your computer. It can be pretty much anywhere (as long as you can find it easily!).</p>
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
-<strong>TIP</strong>: You may also want to create a new RStudio Project in the workshop folder, which will make it easy to reopen your work.
+<strong>TIP</strong>: You may also want to create a new RStudio Project in the workshop folder, which will make it easy to reopen your work. File &gt;&gt; New Project…
 </p>
 <p><br />
 </p>
 <p>5. <strong>Set the working directory in RStudio to the workshop folder</strong></p>
-<p>In RStudio, set the working directory to workshop folder you just created. For example you can run the <code>setwd()</code> command (substituting your <strong>own folder location</strong>, of course!):</p>
+<p>In RStudio, set the working directory to workshop folder you just created. For example if you created a folder on the desktop, you can run the <code>setwd()</code> command (substituting your <strong>own folder location</strong>, of course!):</p>
 <pre class="r klippy copyme"><code>## Example of setting the working directory:
 setwd(&quot;C:\\Users\\Andy\\Desktop\\Spatial R Workshop&quot;)</code></pre>
 <p><br />
 </p>
-<p><strong>Windows users</strong>: please note that R requires you to use double-backslashes in path names</p>
+<p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
+<strong>Windows users</strong>: please note that R requires you to use double-backslashes in path names.
+</p>
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
 <strong>TIP</strong>: An alternative (&amp; easier) way to set the working directory is to goto the RStudio menu and select Session &gt;&gt; Set Working Directory &gt;&gt; Choose Directory.
 </p>
