@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Manipulating Tables with dplyr  " />
+  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href=' https://etherpad.wikimedia.org/p/rspatial-scgis2021 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ucanr-igis.github.io/rspatial_scgis21/ '> https://ucanr-igis.github.io/rspatial_scgis21/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
+  <meta name="font-size-adjustment" content="2"/>
+  <title>Spatial Data Analysis with R  Society for Conservation GIS, July 2021</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+            pre > code.sourceCode { white-space: pre; position: relative; }
+            pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+            pre > code.sourceCode > span:empty { height: 1.2em; }
+            code.sourceCode > span { color: inherit; text-decoration: inherit; }
+            div.sourceCode { margin: 1em 0; }
+            pre.sourceCode { margin: 0; }
+            @media screen {
+            div.sourceCode { overflow: auto; }
+            }
+            @media print {
+            pre > code.sourceCode { white-space: pre-wrap; }
+            pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+            }
+            pre.numberSource code
+              { counter-reset: source-line 0; }
+            pre.numberSource code > span
+              { position: relative; left: -4em; counter-increment: source-line; }
+            pre.numberSource code > span > a:first-child::before
+              { content: counter(source-line);
+                position: relative; left: -1em; text-align: right; vertical-align: baseline;
+                border: none; display: inline-block;
+                -webkit-touch-callout: none; -webkit-user-select: none;
+                -khtml-user-select: none; -moz-user-select: none;
+                -ms-user-select: none; user-select: none;
+                padding: 0 4px; width: 4em;
+                color: #aaaaaa;
+              }
+            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+            div.sourceCode
+              {   }
+            @media screen {
+            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+            }
+            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+            code span.at { color: #7d9029; } /* Attribute */
+            code span.bn { color: #40a070; } /* BaseN */
+            code span.bu { } /* BuiltIn */
+            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+            code span.ch { color: #4070a0; } /* Char */
+            code span.cn { color: #880000; } /* Constant */
+            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+            code span.dt { color: #902000; } /* DataType */
+            code span.dv { color: #40a070; } /* DecVal */
+            code span.er { color: #ff0000; font-weight: bold; } /* Error */
+            code span.ex { } /* Extension */
+            code span.fl { color: #40a070; } /* Float */
+            code span.fu { color: #06287e; } /* Function */
+            code span.im { } /* Import */
+            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+            code span.op { color: #666666; } /* Operator */
+            code span.ot { color: #007020; } /* Other */
+            code span.pp { color: #bc7a00; } /* Preprocessor */
+            code span.sc { color: #4070a0; } /* SpecialChar */
+            code span.ss { color: #bb6688; } /* SpecialString */
+            code span.st { color: #4070a0; } /* String */
+            code span.va { color: #19177c; } /* Variable */
+            code span.vs { color: #4070a0; } /* VerbatimString */
+            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+          </style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACkUlEQVQ4jX2SW0jTcRTHTzNyeZlh6lqmm3POdNPC6SxSEzaqafkykOFoIxTDWpKRFV6iQMNLFyMSsQvUW0WORc2WWBmGKEGZXUyz0NrmNmfa1PYgfHsQ1v5oHjgvX875/M45vy/R8mDJ9caxrFIL5CUWJB00Q9n+7Q+l1BetUMuMTL3JpTB0QVnejd1Hu9DQ60G5eQbqB7PIvj0L2bUZ0KZzghWbs0o7Fx3Tc/B6vStm6+g0wrQvIKh2gKKyUxnNSZoO685SC1YDeL1e9Ll+Ia7WCd5pJ4hojQ8g1nViezETYBqZx93BOdwa9jAgsdUT4J6ZQqC6f4GIiLYU9/RzNWYIdU9hd/8rLjN7UGT8DbWROVVMlQsBBWas142DiIikdfbFMF0POIVm2NzM1zwLS+mvcSsnEajpBSv/8RIgucGJ1EYXEs+NwjrlWfUGMee/Y2PFJIJLrFibex8kOsahhCYnUlpnIL1kh9X9/yMKG2yIOOlAsPYnAveZsE75EEQUQLwTwy5Rsxvx9UxApKEPEYY+BiSizA623oaggkdgq4xLKwRLq7i8sy6EFlpg8wNEVwyAd3wAbZ8cPu3CazeCC/sRojYjaL8Jvm8MPWLDBm03A8CveQ9+7RBia4cYU4QfeokwzTOwc6/4OzKXHap/C5ufD0RNo0i4OAZR81dcnnD69Mp3PxBe9GRkuZdFKk7sqTcQ132EpGUMydetSLnpgOSGHVtbxpHU9AX8mkFEG55/ZrjQL1h82V6esPLVh8Sr40i940J6xzzS7s1C0m6HqHEEiTnatgT5gcPijHxltFwhjpRIQpZjBAJ2lFTBFW5TiOPT8mXx6apdcRl5OaJM1Q6hLC9ls3RPTLgok0NELCKiv02kPqt/O1MZAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
+  <meta name="robots" content="noindex,nofollow"/>
+  <script language="javascript" type="text/javascript">
+  function TriShowHide(shID) {
+    shIDspan = shID + "span";
+    shIDdiv = shID + "div";
+    if (document.getElementById(shIDdiv).style.display != 'block') {
+      document.getElementById(shIDdiv).style.display = 'block';
+      txtSpan = "&#9660;";
+    } else {
+      document.getElementById(shIDdiv).style.display = 'none';
+      txtSpan = "&#9654;";
+    }
+    document.getElementById(shIDspan).innerHTML = txtSpan + " ";
+  }
+  function showHide(shID) {
+    if (shID=="soln-show-all") {
+      var allAnswerCode = document.getElementsByClassName("answer-code");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'block';
+      }
+    } else if (shID=="soln-hide-all") {
+      var allAnswerCode = document.getElementsByClassName("answer-code");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'none';
+      }
+    } else if (shID=="hints-show-all") {
+      var allAnswerCode = document.getElementsByClassName("hint");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'block';
+      }
+    } else if (shID=="hints-hide-all") {
+      var allAnswerCode = document.getElementsByClassName("hint");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'none';
+      }
+    } else {
+      if (document.getElementById(shID)) {
+        if (document.getElementById(shID).style.display != 'block') {
+          document.getElementById(shID).style.display = 'block';
+        } else {
+          document.getElementById(shID).style.display = 'none';
+        }
+      }
+    }
+  }
+  function CopyToClipboard(containerid) {
+  if (document.selection) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(document.getElementById(containerid));
+      range.select().createTextRange();
+      document.execCommand("copy");
+  } else if (window.getSelection) {
+      var range = document.createRange();
+      range.selectNode(document.getElementById(containerid));
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      // alert("text copied")
+  }}
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163964617-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-163964617-1');
+  </script>
+  <script src="lib/header-attrs-2.7/header-attrs.js"></script>
+  <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="lib/slidy-2/scripts/slidy.js"></script>
+  <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
+  <script src="lib/clipboard-1.7.1/clipboard.min.js"></script>
+  <link href="lib/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+  <link href="lib/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+  <script src="lib/klippy-0.0.0.9500/js/klippy.min.js"></script>
+  <script src="lib/kePrint-0.0.1/kePrint.js"></script>
+  <link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="../css/slidy_styles.css" />
+  <meta name="duration" content="0" />
+</head>
+<body>
+<script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
+<div class="slide titlepage">
+  <h1 class="title"><span class="course-title">Spatial Data Analysis with R </span><br/><span class="course-subtitle">Society for Conservation GIS, July 2021</span></h1>
+  <p class="author">
+Manipulating Tables with dplyr <br/><img src='images/2d-data-munging_645x160.png'/>
+  </p>
+</div>
+<div id="dplyr" class="slide section level1">
+<h1><code>dplyr</code></h1>
+<script language="javascript" type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
+<script>
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>An alternative (usually better) way to manipulate or ‘munge’ data frames</p>
+<p>Part of the <a href="https://www.tidyverse.org" target="_blank">tidyverse</a></p>
+<p>Good way to familiarize yourself with it: explore the <a href="../extras/data-transformation.pdf" target="_blank">cheat sheet</a></p>
+<p><a href="../extras/data-transformation.pdf" target="_blank"><img src="images/data-transformation-600x464.png" style="width:600px;"></a></p>
+</div>
+<div id="useful-dplyr-functions" class="slide section level1">
+<h1>Useful <code>dplyr</code> functions</h1>
+<table class="tbl_compact">
+<tbody>
+<tr>
+<td style="text-align:left;width: 12em; ">
+subset rows
+</td>
+<td style="text-align:left;font-family: monospace;">
+filter(), slice()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 12em; ">
+order rows
+</td>
+<td style="text-align:left;font-family: monospace;">
+arrange()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 12em; ">
+pick column(s)
+</td>
+<td style="text-align:left;font-family: monospace;">
+select(), pull()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 12em; ">
+add new columns
+</td>
+<td style="text-align:left;font-family: monospace;">
+mutate()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 12em; ">
+join data frames
+</td>
+<td style="text-align:left;font-family: monospace;">
+left_join(), right_join(), inner_join()
+</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<div class="tip">
+<p><strong><code>select()</code></strong>, <strong><code>filter()</code></strong>, <strong><code>count()</code></strong>, and <strong><code>arrange()</code></strong> are common function names that exist in other packages. To avoid errors either:</p>
+<ol style="list-style-type: decimal">
+<li>Preface them with <code>dplyr::</code></li>
+</ol>
+<div class="indented4">
+or
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Set your preferences using the <code>conflicted</code> package:</li>
+</ol>
+<div class="indented1 indented1r">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">## Load the conflicted package</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(conflicted)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Set conflict preferences</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">conflict_prefer</span>(<span class="st">&quot;count&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">conflict_prefer</span>(<span class="st">&quot;arrange&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+</div>
+</div>
+<!--- tip --->
+</div>
+<div id="piping" class="slide section level1">
+<h1>Piping</h1>
+<p><strong>Piping</strong> is a way of writing expressions that combine multiple functions:</p>
+<div class="indented4" style="font-family:monospace;">
+<p>fun_a() %&gt;% fun_b() %&gt;% fun_c() %&gt;% …</p>
+</div>
+<p>Piping allows the results of one function to be passed as the first argument of the next function. Hence a series of commands to be written like a sentence.</p>
+<pre style="background-color:white; border:none; color:black; font-family:monospace; font-size:20pt; font-weight:normal; margin-left:4em;">
+fun_a(x, ...) %>% fun_b(x, ...) %>% fun_c(x, ...) %>% ...
+            │           ￪     │           ￪ 
+            └───────────┘     └───────────┘
+</pre>
+<p>So the following are <em>equivalent</em>:</p>
+<div class="indented2" style="font-family:monospace">
+<p>x &lt;- st_transform(ca_counties, 4326)</p>
+<p>x &lt;- ca_counties %&gt;% st_transform(4326)</p>
+</div>
+<p><br />
+</p>
+<p>Piping makes reading and writing <strong>nested expressions</strong> a lot easier!</p>
+<p>The following are also <em>equivalent</em>:</p>
+<div class="indented2" style="font-family:monospace">
+<p>plot(st_geometry(st_transform(ca_counties, 4326)))</p>
+<p>ca_counties %&gt;%<br />
+  st_transform(4326) %&gt;%<br />
+  st_geometry() %&gt;%<br />
+  plot()</p>
+</div>
+<p><br />
+</p>
+<div class="tip">
+<p><em>ctrl</em> + <em>shift</em> + <em>m</em> is the RStudio keyboard shortcut to insert: <code>%&gt;%</code></p>
+</div>
+<!--- tip --->
+</div>
+<div id="stringing-together-multiple-dplyr-functions" class="slide section level1">
+<h1>Stringing Together Multiple <code>dplyr</code> Functions</h1>
+<p>Piping is very common with <code>dplyr</code>, where you often combine multiple functions in one expression:</p>
+<pre style="background-color:white; border:none;">
+iris %>% filter(Sepal.Length > 7) %>% mutate(width_length = Sepal.Width * Sepal.Length)
+<span style="color:DimGrey;">  │        │                             │
+  │        │                             └─ create a new column
+  │        │
+  │        ├─ select those rows where Sepal.Length > 7
+  │        └─ don't have to specify the data frame
+  │    
+  └ start with this data frame 
+</span></pre>
+<div class="tip">
+<p>Column names when used as arguments in <code>dplyr</code> functions should <strong>not</strong> be in quotes.</p>
+</div>
+<p>Result:</p>
+<div class="indented2">
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species width_length
+## 1           7.1         3.0          5.9         2.1 virginica        21.30
+## 2           7.6         3.0          6.6         2.1 virginica        22.80
+## 3           7.3         2.9          6.3         1.8 virginica        21.17
+## 4           7.2         3.6          6.1         2.5 virginica        25.92
+## 5           7.7         3.8          6.7         2.2 virginica        29.26
+## 6           7.7         2.6          6.9         2.3 virginica        20.02
+## 7           7.7         2.8          6.7         2.0 virginica        21.56
+## 8           7.2         3.2          6.0         1.8 virginica        23.04
+## 9           7.2         3.0          5.8         1.6 virginica        21.60
+## 10          7.4         2.8          6.1         1.9 virginica        20.72
+## 11          7.9         3.8          6.4         2.0 virginica        30.02
+## 12          7.7         3.0          6.1         2.3 virginica        23.10</code></pre>
+</div>
+<div class="infobox">
+<p><code>dplyr</code> functions return <em>tibbles</em>, which are essentially data frames with a couple of minor tweaks. <a href="https://blog.rstudio.com/2016/03/24/tibble-1-0-0/#tibbles-vs-data-frames" target="_blank" rel="noopener">More info</a>.</p>
+</div>
+<!--- InfoBox --->
+</div>
+<div id="subset-rows-with-filter-and-slice" class="slide section level1">
+<h1>Subset rows with <code>filter()</code> and <code>slice()</code></h1>
+<p>Use <code>filter()</code> when you want to extract rows based on a <strong>conditional expression</strong>:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Select rows where Sepal.Length &gt; 7</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>) </span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 1           7.1         3.0          5.9         2.1 virginica
+## 2           7.6         3.0          6.6         2.1 virginica
+## 3           7.3         2.9          6.3         1.8 virginica
+## 4           7.2         3.6          6.1         2.5 virginica
+## 5           7.7         3.8          6.7         2.2 virginica
+## 6           7.7         2.6          6.9         2.3 virginica
+## 7           7.7         2.8          6.7         2.0 virginica
+## 8           7.2         3.2          6.0         1.8 virginica
+## 9           7.2         3.0          5.8         1.6 virginica
+## 10          7.4         2.8          6.1         1.9 virginica
+## 11          7.9         3.8          6.4         2.0 virginica
+## 12          7.7         3.0          6.1         2.3 virginica</code></pre>
+</div>
+<p><br />
+</p>
+<p>To filter based on <strong>multiple criteria</strong> with <strong>“AND”</strong> logic (both criteria must be met), add additional conditional expressions:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Select rows where Sepal.Length &gt; 7 AND Species is virginica</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>, Species<span class="op">==</span><span class="st">&quot;virginica&quot;</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 1           7.1         3.0          5.9         2.1 virginica
+## 2           7.6         3.0          6.6         2.1 virginica
+## 3           7.3         2.9          6.3         1.8 virginica
+## 4           7.2         3.6          6.1         2.5 virginica
+## 5           7.7         3.8          6.7         2.2 virginica
+## 6           7.7         2.6          6.9         2.3 virginica
+## 7           7.7         2.8          6.7         2.0 virginica
+## 8           7.2         3.2          6.0         1.8 virginica
+## 9           7.2         3.0          5.8         1.6 virginica
+## 10          7.4         2.8          6.1         1.9 virginica
+## 11          7.9         3.8          6.4         2.0 virginica
+## 12          7.7         3.0          6.1         2.3 virginica</code></pre>
+</div>
+<div class="infobox">
+<p>To filter with “OR” logic (or a mix of AND and OR), use a single conditional expression with the ‘<code>&amp;</code>’ (and) and ‘<code>|</code>’ (or) operators. Example:</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="fl">5.6</span> <span class="op">&amp;</span><span class="st"> </span>(Species<span class="op">==</span><span class="st">&quot;virginica&quot;</span> <span class="op">|</span><span class="st"> </span>Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span>))</span></code></pre></div>
+</div>
+<p>This expression returns rows where Sepal.Length &gt; 5.6 <strong>AND</strong> the Species is <em>virginica</em> <strong>OR</strong> <em>setosa</em>.</p>
+</div>
+<!--- info-box --->
+<p><code>slice()</code> allows you to subset based on <strong>row numbers</strong>:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">## Get the 21st through 30th rows</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">21</span><span class="op">:</span><span class="dv">30</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1           5.4         3.4          1.7         0.2  setosa
+## 2           5.1         3.7          1.5         0.4  setosa
+## 3           4.6         3.6          1.0         0.2  setosa
+## 4           5.1         3.3          1.7         0.5  setosa
+## 5           4.8         3.4          1.9         0.2  setosa
+## 6           5.0         3.0          1.6         0.2  setosa
+## 7           5.0         3.4          1.6         0.4  setosa
+## 8           5.2         3.5          1.5         0.2  setosa
+## 9           5.2         3.4          1.4         0.2  setosa
+## 10          4.7         3.2          1.6         0.2  setosa</code></pre>
+</div>
+</div>
+<div id="sort-rows-with-arrange" class="slide section level1">
+<h1>Sort rows with <code>arrange()</code></h1>
+<p>Sort rows with <code>arrange()</code></p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## Sort rows by Sepal.Length, return the first 10</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Sepal.Length) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1           4.3         3.0          1.1         0.1  setosa
+## 2           4.4         2.9          1.4         0.2  setosa
+## 3           4.4         3.0          1.3         0.2  setosa
+## 4           4.4         3.2          1.3         0.2  setosa
+## 5           4.5         2.3          1.3         0.3  setosa
+## 6           4.6         3.1          1.5         0.2  setosa
+## 7           4.6         3.4          1.4         0.3  setosa
+## 8           4.6         3.6          1.0         0.2  setosa
+## 9           4.6         3.2          1.4         0.2  setosa
+## 10          4.7         3.2          1.3         0.2  setosa</code></pre>
+</div>
+<div class="tip">
+<p>1) To sort in reverse order (i.e., largest to smallest), wrap the column name in <code>desc()</code>:</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Sepal.Length)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 1           7.9         3.8          6.4         2.0 virginica
+## 2           7.7         3.8          6.7         2.2 virginica
+## 3           7.7         2.6          6.9         2.3 virginica
+## 4           7.7         2.8          6.7         2.0 virginica
+## 5           7.7         3.0          6.1         2.3 virginica
+## 6           7.6         3.0          6.6         2.1 virginica
+## 7           7.4         2.8          6.1         1.9 virginica
+## 8           7.3         2.9          6.3         1.8 virginica
+## 9           7.2         3.6          6.1         2.5 virginica
+## 10          7.2         3.2          6.0         1.8 virginica</code></pre>
+</div>
+<p>2) To sort on multiple columns, simply add additional field names to <code>arrange()</code>.</p>
+<p>Sort iris first by Sepal.Length, then (when there are ties) by Sepal.Width:</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Sepal.Length, Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1           4.3         3.0          1.1         0.1  setosa
+## 2           4.4         2.9          1.4         0.2  setosa
+## 3           4.4         3.0          1.3         0.2  setosa
+## 4           4.4         3.2          1.3         0.2  setosa
+## 5           4.5         2.3          1.3         0.3  setosa
+## 6           4.6         3.1          1.5         0.2  setosa
+## 7           4.6         3.2          1.4         0.2  setosa
+## 8           4.6         3.4          1.4         0.3  setosa
+## 9           4.6         3.6          1.0         0.2  setosa
+## 10          4.7         3.2          1.3         0.2  setosa</code></pre>
+</div>
+<p>3) See also <strong><code>top_n()</code></strong></p>
+</div>
+<!--- tip --->
+</div>
+<div id="choose-columns-with-select-pull" class="slide section level1">
+<h1>Choose columns with <code>select()</code> &amp; <code>pull()</code></h1>
+<p>Often you have more columns than you need. You can ask for specific columns using <code>select()</code>:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal.Length, Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Petal.Length Species
+## 1           1.4  setosa
+## 2           1.4  setosa
+## 3           1.3  setosa
+## 4           1.5  setosa
+## 5           1.4  setosa
+## 6           1.7  setosa
+## 7           1.4  setosa
+## 8           1.5  setosa
+## 9           1.4  setosa
+## 10          1.5  setosa</code></pre>
+</div>
+<div class="tip">
+<p>To reorder columns, see also <code>relocate()</code></p>
+</div>
+<!--- tip --->
+<h2 id="getting-a-single-column">Getting a single column</h2>
+<p>If you pass a single column name to <code>select()</code>, you still get a data frame back. To get a single column back as a vector, use <code>pull()</code>:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal.Length) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)  <span class="co">## this is still a data frame</span></span></code></pre></div>
+<pre><code>##    Petal.Length
+## 1           1.4
+## 2           1.4
+## 3           1.3
+## 4           1.5
+## 5           1.4
+## 6           1.7
+## 7           1.4
+## 8           1.5
+## 9           1.4
+## 10          1.5</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Petal.Length) <span class="co">## returns a vector</span></span></code></pre></div>
+<pre><code>##   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5
+##  [33] 1.5 1.4 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7
+##  [65] 3.6 4.4 4.5 4.1 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2
+##  [97] 4.2 4.3 3.0 4.1 6.0 5.1 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9
+## [129] 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</code></pre>
+</div>
+</div>
+<div id="add-columns-with-mutate" class="slide section level1">
+<h1>Add columns with <code>mutate()</code></h1>
+<p>Adding columns is easy with <code>mutate()</code>. The argument(s) to <code>mutate()</code> should be formula expression(s) that can include column names.</p>
+<p><br />
+</p>
+<p>Example 1: Add a column to iris containing the <strong>ratio of the petal width to length</strong>.</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">petal_w2l_ratio =</span> Petal.Width <span class="op">/</span><span class="st"> </span>Petal.Length) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species petal_w2l_ratio
+## 1           5.1         3.5          1.4         0.2  setosa      0.14285714
+## 2           4.9         3.0          1.4         0.2  setosa      0.14285714
+## 3           4.7         3.2          1.3         0.2  setosa      0.15384615
+## 4           4.6         3.1          1.5         0.2  setosa      0.13333333
+## 5           5.0         3.6          1.4         0.2  setosa      0.14285714
+## 6           5.4         3.9          1.7         0.4  setosa      0.23529412
+## 7           4.6         3.4          1.4         0.3  setosa      0.21428571
+## 8           5.0         3.4          1.5         0.2  setosa      0.13333333
+## 9           4.4         2.9          1.4         0.2  setosa      0.14285714
+## 10          4.9         3.1          1.5         0.1  setosa      0.06666667</code></pre>
+</div>
+<p><br />
+</p>
+<p>Example 2: New columns don’t have to be based on other columns. Create a new column called “group” and fill it with a roughly equal number of ‘training’ and ‘validation’ values:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;training&quot;</span>, <span class="st">&quot;validation&quot;</span>), <span class="dt">size =</span> <span class="kw">nrow</span>(iris), <span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species      group
+## 1           5.1         3.5          1.4         0.2  setosa   training
+## 2           4.9         3.0          1.4         0.2  setosa   training
+## 3           4.7         3.2          1.3         0.2  setosa validation
+## 4           4.6         3.1          1.5         0.2  setosa   training
+## 5           5.0         3.6          1.4         0.2  setosa validation
+## 6           5.4         3.9          1.7         0.4  setosa validation
+## 7           4.6         3.4          1.4         0.3  setosa validation
+## 8           5.0         3.4          1.5         0.2  setosa validation
+## 9           4.4         2.9          1.4         0.2  setosa validation
+## 10          4.9         3.1          1.5         0.1  setosa validation</code></pre>
+<p><br />
+</p>
+<div class="infobox">
+<p><code>transmute()</code> does the same things as <code>mutate()</code>, but only the new column(s) are returned.</p>
+</div>
+</div>
+<div id="group-and-summarize" class="slide section level1">
+<h1>Group and Summarize</h1>
+<p>A common task in analysis is to <strong>group rows</strong> according to the values in a column, and then for each group of rows <strong>compute a statistic</strong> like mean, max, or count.</p>
+<p>To do this with <code>dplyr</code>, use <strong><code>group_by()</code></strong> followed by <strong><code>summarise()</code></strong> or <strong><code>count()</code></strong>.</p>
+<p><br />
+</p>
+<p>Example: For each iris species, count the number of rows:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="st">  </span><span class="kw">count</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+## # Groups:   Species [3]
+##   Species        n
+##   &lt;fct&gt;      &lt;int&gt;
+## 1 setosa        50
+## 2 versicolor    50
+## 3 virginica     50</code></pre>
+</div>
+<p><br />
+</p>
+<h2 id="summarise"><code>summarise()</code></h2>
+<p><code>summarise()</code> receives groups of rows generates new column(s) with summary statistics (or other aggregate outputs). The argument(s) to <code>summarise()</code> should be formula expression(s) which define the name of a new column and how it should be calculated. Example:</p>
+<div class="indented2">
+<code>summarise( avg_petal_length = mean(Petal.Length) )</code>
+</div>
+<p>Each group of rows will be fed into <code>summarise()</code>. Therefore when the formula expression includes column names (typical), column names should be placed into a aggregate function like <code>sum()</code> that accepts multiple values and returns a single value.</p>
+<p><br />
+</p>
+<p>Example: For each iris species, calculate the mean Petal.Length and Petal.Width:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># For each Species, compute the mean petal length and width</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_petal_length =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">avg_petal_width =</span> <span class="kw">mean</span>(Petal.Width))</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   Species    avg_petal_length avg_petal_width
+##   &lt;fct&gt;                 &lt;dbl&gt;           &lt;dbl&gt;
+## 1 setosa                 1.46           0.246
+## 2 versicolor             4.26           1.33 
+## 3 virginica              5.55           2.03</code></pre>
+</div>
+<div class="tip">
+<p>If you omit <code>group_by()</code>, <code>summarise()</code> will operate on all the rows in the data frame. Example:</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">biggest_petal_length =</span> <span class="kw">max</span>(Petal.Length))</span></code></pre></div>
+<pre><code>##   biggest_petal_length
+## 1                  6.9</code></pre>
+</div>
+<p>Note that <code>summarise()</code> always returns a data frame. To convert to a single column into a vector use <code>pull()</code>.</p>
+</div>
+<!--- tip --->
+</div>
+<div id="r-notebook-exercise" class="slide section level1">
+<h1>R Notebook Exercise</h1>
+<p><p><span style='color:olive;'>nb_dplyr_scgis21.Rmd</span><br/><span style='font-size:80%; font-style:italic;'>Manipulate tables with dplyr</span></p> <div class="indented2" style="font-style:italic; font-size:90%; border:1px dashed lightgray; width:600px; overflow:hidden; padding:10px;"> <img src="images/download-rmd-btn_140x136x256.png" style="float:right; padding:5px; width:140px; height:136px;"/> <p>If you don't have it, you can get it <a href="https://ucanr-igis.github.io/rspatial_data/nb_dplyr_scgis21.nb.html" target="_blank" rel="noopener" style="font-weight:bold;">here</a>.</p><p>Click the 'code' button in the upper-right and select 'Download Rmd'.</p> <p>View <a href='https://ucanr-igis.github.io/rspatial_data/nb_dplyr_scgis21_ans.nb.html' target='_blank'>Answer</a>.</p> </div></p>
+</div>
+<div id="joining-tables" class="slide section level1">
+<h1>Joining Tables</h1>
+<p><img src="images/table_join01_820x442x256.png" /></p>
+<p>To join two data frames based on a common field, you can use:</p>
+<div class="indented1">
+<p><tt><strong>left_join(<em>x</em>, <em>y</em>, <em>by</em>)</strong></tt></p>
+</div>
+<p>where <em>x</em> and <em>y</em> are data frames, and <em>by</em> is the name of a column they have in common.</p>
+<div class="tip">
+<p>If there is only one column in common, and if it has the same name in both data frames, you can omit the <em>by</em> argument.</p>
+<p>If the common column is named differently in the two data frames, you can deal with that by passing a named vector as the <em>by</em> argument. See below.</p>
+</div>
+<!--- tip --->
+<p>To illustrate a table join, we’ll first import a csv with some fake data about the genetics of different iris species:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>iris_genetics &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/iris_genetics.csv&quot;</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="co">## Create a data frame with additional info about the three IRIS species</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="co"># iris_genetics &lt;- data.frame(Species=c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;),</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="co">#                           num_genes = c(42000, 41000, 43000),</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="co">#                           prp_alles_recessive = c(0.8, 0.76, 0.65))</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a></span>
+<span id="cb32-8"><a href="#cb32-8"></a>iris_genetics</span></code></pre></div>
+<pre><code>##   X    Species num_genes prp_alles_recessive
+## 1 1     setosa     42000                0.80
+## 2 2 versicolor     41000                0.76
+## 3 3  virginica     43000                0.65</code></pre>
+</div>
+<p>We can join these additional columns to the iris data frame with <code>left_join()</code>:</p>
+<div class="indented4 indented1-r">
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="st">  </span><span class="kw">left_join</span>(iris_genetics, <span class="dt">by =</span> <span class="st">&quot;Species&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species X num_genes prp_alles_recessive
+## 1           5.1         3.5          1.4         0.2  setosa 1     42000                 0.8
+## 2           4.9         3.0          1.4         0.2  setosa 1     42000                 0.8
+## 3           4.7         3.2          1.3         0.2  setosa 1     42000                 0.8
+## 4           4.6         3.1          1.5         0.2  setosa 1     42000                 0.8
+## 5           5.0         3.6          1.4         0.2  setosa 1     42000                 0.8
+## 6           5.4         3.9          1.7         0.4  setosa 1     42000                 0.8
+## 7           4.6         3.4          1.4         0.3  setosa 1     42000                 0.8
+## 8           5.0         3.4          1.5         0.2  setosa 1     42000                 0.8
+## 9           4.4         2.9          1.4         0.2  setosa 1     42000                 0.8
+## 10          4.9         3.1          1.5         0.1  setosa 1     42000                 0.8</code></pre>
+</div>
+<p><br />
+</p>
+<div class="infobox">
+<p>If you need to join tables on multiple columns, add additional column names to the <code>by</code> argument.</p>
+<p>Join columns must be the same data type (i.e., both numeric or both character).</p>
+<p>There are several variants of <code>left_join()</code>, the most common being <strong><code>right_join()</code></strong> and <strong><code>inner_join()</code></strong>. See help for details.</p>
+</div>
+<!--- info-box --->
+<h2 id="joining-tables-when-the-column-name-is-different">Joining Tables When the Column Name is Different</h2>
+<p>If the join column is named differently in the two tables, you can pass a named character vector as the <code>by</code> argument. A named vector is a vector whose elements have been assigned names. You can construct a named vector with <code>c()</code>.</p>
+<p><img src="images/table_join02_820x442x256.png" /></p>
+<p>For example if the join column was named ‘<em>SpeciesName</em>’ in <em>x</em>, and just ‘<em>Species</em>’ in <em>y</em>, your expression would be:</p>
+<div class="indented2">
+<strong><code>left_join(x, y, by = c("SpeciesName" = "Species"))</code></strong>
+</div>
+</div>
+<div id="reshaping-data" class="slide section level1">
+<h1>Reshaping Data</h1>
+<p><em>Reshaping</em> data includes</p>
+<div class="compact">
+<ul>
+<li>turning rows into columns (aka pivot tables, cross tab query)<br />
+</li>
+<li>turning columns into rows</li>
+</ul>
+</div>
+<p>The go-to package for reshaping data frames is <a href="https://tidyr.tidyverse.org" target="_blank" rel="noopener"><tt><strong>tidyr</strong></tt></a></p>
+<div class="indented3">
+<img src="images/tidyr_240x277.png" style="width:140px;" />
+</div>
+<p><br />
+</p>
+<p>The two most common <code>tidyr</code> functions:</p>
+<div class="indented2">
+<p><em><code>pivot_longer()</code></em><br />
+<img src="images/pivot_longer_566x212x256.png" /></p>
+<p><em><code>pivot_wider()</code></em><br />
+<img src="images/pivot_wider_674x336x256.png" /></p>
+</div>
+<p>These and many other reshaping functions are described on page 2 of the <a href="https://rawgit.com/rstudio/cheatsheets/master/data-import.pdf" target="_blank" rel="noopener"><strong>Data Import Cheatsheet</strong></a>.</p>
+<p><img src="images/data-import-cheatsheet-pg2_900x698x256.png" /></p>
+</div>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<p>Today we saw:</p>
+<div class="compact">
+<ul>
+<li>how to pipe together <code>dplyr</code> functions to:</li>
+</ul>
+<div class="indented2 compact">
+<ul>
+<li>subset and sort rows in a data frame<br />
+</li>
+<li>select columns<br />
+</li>
+<li>group and summarise rows<br />
+</li>
+<li>create new columns<br />
+</li>
+<li>join tables based a common column</li>
+</ul>
+</div>
+</div>
+<div class="infobox">
+<p><strong>Additional Resources</strong></p>
+<div class="indented1">
+<p><a href="../extras/data-transformation.pdf" target="_blank">Data Transformation Cheatsheet</a></p>
+<p><a href="../extras/data-import.pdf" target="_blank">Data Import Cheatsheet</a></p>
+</div>
+</div>
+<p>
+<br/>
+<hr/>
+<strong>Next: </strong> <a href="nb_map-ynp_scgis21.html">Wrapup Exercise #1: Map Yosemite</a>
+</p>
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>

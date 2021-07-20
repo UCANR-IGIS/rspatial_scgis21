@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Tables 101 " />
+  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href=' https://etherpad.wikimedia.org/p/rspatial-scgis2021 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ucanr-igis.github.io/rspatial_scgis21/ '> https://ucanr-igis.github.io/rspatial_scgis21/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
+  <meta name="font-size-adjustment" content="2"/>
+  <title>Spatial Data Analysis with R  Society for Conservation GIS, July 2021</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+            pre > code.sourceCode { white-space: pre; position: relative; }
+            pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+            pre > code.sourceCode > span:empty { height: 1.2em; }
+            code.sourceCode > span { color: inherit; text-decoration: inherit; }
+            div.sourceCode { margin: 1em 0; }
+            pre.sourceCode { margin: 0; }
+            @media screen {
+            div.sourceCode { overflow: auto; }
+            }
+            @media print {
+            pre > code.sourceCode { white-space: pre-wrap; }
+            pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+            }
+            pre.numberSource code
+              { counter-reset: source-line 0; }
+            pre.numberSource code > span
+              { position: relative; left: -4em; counter-increment: source-line; }
+            pre.numberSource code > span > a:first-child::before
+              { content: counter(source-line);
+                position: relative; left: -1em; text-align: right; vertical-align: baseline;
+                border: none; display: inline-block;
+                -webkit-touch-callout: none; -webkit-user-select: none;
+                -khtml-user-select: none; -moz-user-select: none;
+                -ms-user-select: none; user-select: none;
+                padding: 0 4px; width: 4em;
+                color: #aaaaaa;
+              }
+            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+            div.sourceCode
+              {   }
+            @media screen {
+            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+            }
+            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+            code span.at { color: #7d9029; } /* Attribute */
+            code span.bn { color: #40a070; } /* BaseN */
+            code span.bu { } /* BuiltIn */
+            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+            code span.ch { color: #4070a0; } /* Char */
+            code span.cn { color: #880000; } /* Constant */
+            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+            code span.dt { color: #902000; } /* DataType */
+            code span.dv { color: #40a070; } /* DecVal */
+            code span.er { color: #ff0000; font-weight: bold; } /* Error */
+            code span.ex { } /* Extension */
+            code span.fl { color: #40a070; } /* Float */
+            code span.fu { color: #06287e; } /* Function */
+            code span.im { } /* Import */
+            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+            code span.op { color: #666666; } /* Operator */
+            code span.ot { color: #007020; } /* Other */
+            code span.pp { color: #bc7a00; } /* Preprocessor */
+            code span.sc { color: #4070a0; } /* SpecialChar */
+            code span.ss { color: #bb6688; } /* SpecialString */
+            code span.st { color: #4070a0; } /* String */
+            code span.va { color: #19177c; } /* Variable */
+            code span.vs { color: #4070a0; } /* VerbatimString */
+            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+          </style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACkUlEQVQ4jX2SW0jTcRTHTzNyeZlh6lqmm3POdNPC6SxSEzaqafkykOFoIxTDWpKRFV6iQMNLFyMSsQvUW0WORc2WWBmGKEGZXUyz0NrmNmfa1PYgfHsQ1v5oHjgvX875/M45vy/R8mDJ9caxrFIL5CUWJB00Q9n+7Q+l1BetUMuMTL3JpTB0QVnejd1Hu9DQ60G5eQbqB7PIvj0L2bUZ0KZzghWbs0o7Fx3Tc/B6vStm6+g0wrQvIKh2gKKyUxnNSZoO685SC1YDeL1e9Ll+Ia7WCd5pJ4hojQ8g1nViezETYBqZx93BOdwa9jAgsdUT4J6ZQqC6f4GIiLYU9/RzNWYIdU9hd/8rLjN7UGT8DbWROVVMlQsBBWas142DiIikdfbFMF0POIVm2NzM1zwLS+mvcSsnEajpBSv/8RIgucGJ1EYXEs+NwjrlWfUGMee/Y2PFJIJLrFibex8kOsahhCYnUlpnIL1kh9X9/yMKG2yIOOlAsPYnAveZsE75EEQUQLwTwy5Rsxvx9UxApKEPEYY+BiSizA623oaggkdgq4xLKwRLq7i8sy6EFlpg8wNEVwyAd3wAbZ8cPu3CazeCC/sRojYjaL8Jvm8MPWLDBm03A8CveQ9+7RBia4cYU4QfeokwzTOwc6/4OzKXHap/C5ufD0RNo0i4OAZR81dcnnD69Mp3PxBe9GRkuZdFKk7sqTcQ132EpGUMydetSLnpgOSGHVtbxpHU9AX8mkFEG55/ZrjQL1h82V6esPLVh8Sr40i940J6xzzS7s1C0m6HqHEEiTnatgT5gcPijHxltFwhjpRIQpZjBAJ2lFTBFW5TiOPT8mXx6apdcRl5OaJM1Q6hLC9ls3RPTLgok0NELCKiv02kPqt/O1MZAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
+  <meta name="robots" content="noindex,nofollow"/>
+  <script language="javascript" type="text/javascript">
+  function TriShowHide(shID) {
+    shIDspan = shID + "span";
+    shIDdiv = shID + "div";
+    if (document.getElementById(shIDdiv).style.display != 'block') {
+      document.getElementById(shIDdiv).style.display = 'block';
+      txtSpan = "&#9660;";
+    } else {
+      document.getElementById(shIDdiv).style.display = 'none';
+      txtSpan = "&#9654;";
+    }
+    document.getElementById(shIDspan).innerHTML = txtSpan + " ";
+  }
+  function showHide(shID) {
+    if (shID=="soln-show-all") {
+      var allAnswerCode = document.getElementsByClassName("answer-code");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'block';
+      }
+    } else if (shID=="soln-hide-all") {
+      var allAnswerCode = document.getElementsByClassName("answer-code");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'none';
+      }
+    } else if (shID=="hints-show-all") {
+      var allAnswerCode = document.getElementsByClassName("hint");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'block';
+      }
+    } else if (shID=="hints-hide-all") {
+      var allAnswerCode = document.getElementsByClassName("hint");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'none';
+      }
+    } else {
+      if (document.getElementById(shID)) {
+        if (document.getElementById(shID).style.display != 'block') {
+          document.getElementById(shID).style.display = 'block';
+        } else {
+          document.getElementById(shID).style.display = 'none';
+        }
+      }
+    }
+  }
+  function CopyToClipboard(containerid) {
+  if (document.selection) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(document.getElementById(containerid));
+      range.select().createTextRange();
+      document.execCommand("copy");
+  } else if (window.getSelection) {
+      var range = document.createRange();
+      range.selectNode(document.getElementById(containerid));
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      // alert("text copied")
+  }}
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163964617-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-163964617-1');
+  </script>
+  <script src="lib/header-attrs-2.7/header-attrs.js"></script>
+  <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="lib/slidy-2/scripts/slidy.js"></script>
+  <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
+  <script src="lib/clipboard-1.7.1/clipboard.min.js"></script>
+  <link href="lib/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+  <link href="lib/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+  <script src="lib/klippy-0.0.0.9500/js/klippy.min.js"></script>
+  <script src="lib/kePrint-0.0.1/kePrint.js"></script>
+  <link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="../css/slidy_styles.css" />
+  <meta name="duration" content="0" />
+</head>
+<body>
+<script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
+<div class="slide titlepage">
+  <h1 class="title"><span class="course-title">Spatial Data Analysis with R </span><br/><span class="course-subtitle">Society for Conservation GIS, July 2021</span></h1>
+  <p class="author">
+Tables 101<br/><img src='images/table_500x169x256.png'/>
+  </p>
+</div>
+<div id="tabular-data" class="slide section level1">
+<h1>Tabular Data</h1>
+<script>
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>R has two data classes that organize data in rows and columns:</p>
+<div class="indented2">
+<ul>
+<li><strong>matrices</strong><br />
+</li>
+<li><strong>data frames</strong></li>
+</ul>
+</div>
+<div class="infobox">
+<p>A <strong>tibble</strong> is a data frame that prints nicer and has slightly different default behavior when selecting columns.</p>
+</div>
+<p><img src="images/shakespeare_150x175.jpg" style="width:150px; height:175px; float:right;"></p>
+<p>A row, by any other name…</p>
+<div style="width:250px; float:left;">
+<p><br />
+<br />
+<br />
+<br />
+<strong>rows</strong></p>
+<p><em>aka</em>:<br />
+- record<br />
+- case<br />
+- feature (spatial)</p>
+</div>
+<div style="display:inline-block;">
+<p><strong>columns</strong></p>
+<p><em>aka:</em> variable, field</p>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+<div class="colclear">
+
+</div>
+</div>
+<div id="matrices-vs.-data-frames-the-differences" class="slide section level1">
+<h1>Matrices vs. Data Frames: The Differences</h1>
+<table class="tbl_compact">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Data Frame / Tibble
+</th>
+<th style="text-align:left;">
+Matrix
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Data type
+</td>
+<td style="text-align:left;">
+each column can be a different data type
+</td>
+<td style="text-align:left;">
+entire matrix must use the same data type
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column names
+</td>
+<td style="text-align:left;">
+built-in, columns can referenced by name
+</td>
+<td style="text-align:left;">
+optional, can be defined as an attribute for display
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+More than two dimensions
+</td>
+<td style="text-align:left;">
+no
+</td>
+<td style="text-align:left;">
+yes (array)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Can add rows and columns
+</td>
+<td style="text-align:left;">
+yes
+</td>
+<td style="text-align:left;">
+yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Matrix algebra
+</td>
+<td style="text-align:left;">
+no
+</td>
+<td style="text-align:left;">
+yes
+</td>
+</tr>
+</tbody>
+</table>
+<br />
+<br />
+
+<div class="tryit">
+<p><strong>Matrix Algebra Example: Compute the Stable Age Distribution with a Leslie Matrix</strong></p>
+<p>Here we compute the growth rate and stable age population using a <a href="https://en.wikipedia.org/wiki/Leslie_matrix" target="_blank" rel="noopener">Leslie Matrix</a> model. A Leslie Matrix model is similar to a life table for a population structured by age or class. The first row stores the fecundity rate (number of offspring per female of different age classes) while the subsequent rows store the fraction of individuals that survive to the next age class.</p>
+<p>Create a matrix from scratch use the <tt>matrix()</tt> function.</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## Create a Leslie matrix for a Burpie population with three age classes</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>matrix_values &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">0.6</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>b_lesmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data=</span>matrix_values, <span class="dt">ncol=</span><span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>b_lesmat</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">## Compute the Eigenvalues and Eigenvectors</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>b_eig &lt;-<span class="st"> </span><span class="kw">eigen</span>(b_lesmat)</span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">## The dominant Eigenvalue is the population growth rate</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>b_eig<span class="op">$</span>values[<span class="dv">1</span>]</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">## The dominant Eigenvector represents the stable age distribution</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>b_eig<span class="op">$</span>vectors[,<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(b_eig<span class="op">$</span>vectors[,<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]  0.0  2.0    1
+## [2,]  0.6  0.0    0
+## [3,]  0.0  0.5    0
+## [1] 1.203829
+## [1] 0.5863659 0.2922504 0.1213837</code></pre>
+</div>
+<p>⇒ the population is growing at about 20% per generation</p>
+<p>⇒ stable age distribution: 58% of the population in age class 1, 29% in age class 2, and 12% in age class 3.</p>
+</div>
+</div>
+<div id="sample-data-frames" class="slide section level1">
+<h1>Sample Data Frames</h1>
+<p>There are number of sample <strong>data frames</strong> that come with R, including:</p>
+<div class="indented1">
+<p><tt>iris<br />
+trees<br />
+quakes<br />
+airquality<br />
+mtcars<br />
+faithful</tt></p>
+</div>
+<div class="tip">
+<p>You can generally start using a bundled dataset by just typing its name in an expression. R will load it on-the-fly.</p>
+<p>To explicitly load a dataset into memory, execute <tt>data()</tt></tt></p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">data</span>(quakes)  <span class="co">## Usually this is optional</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">head</span>(quakes)</span></code></pre></div>
+<pre><code>##      lat   long depth mag stations
+## 1 -20.42 181.62   562 4.8       41
+## 2 -20.62 181.03   650 4.2       15
+## 3 -26.00 184.10    42 5.4       43
+## 4 -17.97 181.66   626 4.1       19
+## 5 -20.42 181.96   649 4.0       11
+## 6 -19.68 184.31   195 4.0       12</code></pre>
+</div>
+</div>
+</div>
+<div id="importing-a-csv-file" class="slide section level1">
+<h1>Importing a CSV File</h1>
+<p>An easy way to import a csv file is the ‘Import Dataset’ button in RStudio. This tool generates all the arguments for the <tt><strong>read.csv()</strong></tt> function.</p>
+<p>Let’s import a csv file containing the stopping distance of cars.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>csv_fn &lt;-<span class="st"> &quot;./data/stopping_dist_cars.csv&quot;</span>     <span class="co">## Define the file name</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">file.exists</span>(csv_fn)                           <span class="co">## Verify it exists!</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>stop_dist_df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(csv_fn)              <span class="co">## Import</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">head</span>(stop_dist_df)                            <span class="co">## Verify it came in ok!</span></span></code></pre></div>
+<pre><code>## [1] TRUE
+##   speed surface reaction_dist breaking_dist total_dist
+## 1    40     dry            17             9         26
+## 2    50     dry            21            14         35
+## 3    60     dry            25            20         45
+## 4    70     dry            29            27         56
+## 5    80     dry            33            36         69
+## 6    90     dry            38            45         83</code></pre>
+<div class="infobox">
+<p>Other options for importing tables into R:</p>
+<p><img src="images/readr_logo_121x140.png" style="width:121px; height:140px; float:right;"> <tt><a href="https://readr.tidyverse.org" target="_blank"><strong>readr</strong></a></tt> is a tidyverse package with more options for importing tabular data from text files.</p>
+<p><a href="https://readxl.tidyverse.org/" target="_blank"><strong>readxl</strong></a> is the go-to package for importing data from Excel.</p>
+<p>If your data live in a Google Sheet, you can use <a href="https://cran.r-project.org/package=googlesheets" target="_blank"><strong>googlesheets4</strong></a>.</p>
+</div>
+<!--- info-box --->
+</div>
+<div id="explore-a-data-frame" class="slide section level1">
+<h1>Explore a data frame</h1>
+<p>Functions to explore data frames include:</p>
+<table class="tbl_compact">
+<thead>
+<tr>
+<th style="text-align:left;">
+Function
+</th>
+<th style="text-align:left;">
+Results
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+head(), tail()
+</td>
+<td style="text-align:left;">
+view the first / last few rows
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+View()
+</td>
+<td style="text-align:left;">
+View the entire data frame in a new tab
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+names()
+</td>
+<td style="text-align:left;">
+View column names
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+nrow(), ncol(), dim()
+</td>
+<td style="text-align:left;">
+view number of rows &amp; columns
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+help()
+</td>
+<td style="text-align:left;">
+view function help page
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+summary()
+</td>
+<td style="text-align:left;">
+numeric summary of each column
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+tibble::glimpse()
+</td>
+<td style="text-align:left;">
+concise summary of each column
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="working-with-data-frames" class="slide section level1">
+<h1>Working with Data Frames</h1>
+<p>Common data munging tasks with data frames include:</p>
+<div class="compact">
+<ul>
+<li>subsetting rows &amp; columns<br />
+</li>
+<li>sorting rows<br />
+</li>
+<li>creating new columns<br />
+</li>
+<li>grouping rows<br />
+</li>
+<li>numeric summaries<br />
+</li>
+<li>joining tables<br />
+</li>
+<li>etc.</li>
+</ul>
+</div>
+<h2 id="base-r-vs-tidyverse">Base R vs tidyverse</h2>
+<p>Two approaches: <strong>Base R</strong> functions &amp; packages from the <strong>tidyverse</strong>.</p>
+<p>What’s the difference? Much of it is readabilty. See for example the following chunks of <strong>equivalent</strong> code:</p>
+<p><strong>Base R</strong></p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>setosa_recs &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;Sepal.Length&quot;</span>, drop=<span class="ot">FALSE</span>]</span>
+<span id="cb8-2"><a href="#cb8-2"></a>setosa_sepal_ord &lt;-<span class="st"> </span><span class="kw">order</span>(setosa_recs<span class="op">$</span>Sepal.Length)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>seplen_csum &lt;-<span class="st"> </span><span class="kw">cumsum</span>(setosa_recs[setosa_sepal_ord, <span class="st">&quot;Sepal.Length&quot;</span>])</span>
+<span id="cb8-4"><a href="#cb8-4"></a>setosa_runsum &lt;-<span class="st"> </span><span class="kw">cbind</span>(setosa_recs[setosa_sepal_ord,], <span class="dt">running_sum =</span> seplen_csum)</span></code></pre></div>
+</div>
+<p><strong>tidyverse</strong></p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>setosa_runsum &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="st">  </span><span class="kw">select</span>(Sepal.Length) <span class="op">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="st">  </span><span class="kw">arrange</span>(Sepal.Length) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">running_sum =</span> <span class="kw">cumsum</span>(Sepal.Length))</span></code></pre></div>
+</div>
+</div>
+<div id="working-with-columns-base-r" class="slide section level1">
+<h1>Working with Columns {base R}</h1>
+<p>You can grab an individual column by name with the <tt>$</tt> selector.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>mtcars<span class="op">$</span>wt</span></code></pre></div>
+<pre><code>##  [1] 2.620 2.875 2.320 3.215 3.440 3.460 3.570 3.190 3.150 3.440 3.440 4.070 3.730 3.780 5.250 5.424 5.345 2.200 1.615 1.835 2.465
+## [22] 3.520 3.435 3.840 3.845 1.935 2.140 1.513 3.170 2.770 3.570 2.780</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">summary</span>(mtcars<span class="op">$</span>wt)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.513   2.581   3.325   3.217   3.610   5.424</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">plot</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>wt, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">main =</span> <span class="st">&quot;Gas Mileage vs Weight&quot;</span>)</span></code></pre></div>
+<p><img src="tables101_files/figure-slidy/plot_wt_mpg-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subsetting-rows-columns-base-r" class="slide section level1">
+<h1>Subsetting Rows &amp; Columns {base R}</h1>
+<p>One of the most common things you do with data frames is selecting specific rows and/or columns.</p>
+<p>In base R, this is commonly done with square bracket notation:</p>
+<div class="indented4">
+<p><tt><strong>my_dataframe[<em>rows</em>, <em>columns</em>]</strong></tt></p>
+</div>
+<p>Where <em>rows</em> is a <strong>vector of integers</strong>, or <strong>vector of logicals</strong> (TRUE/FALSE) of the row numbers you want.</p>
+<p><strong>Example 1: <em>rows</em> is a vector of <em>integers</em>:</strong></p>
+<div class="indented2">
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>mtcars[<span class="dv">5</span><span class="op">:</span><span class="dv">10</span>, ]</span></code></pre></div>
+<pre><code>##                    mpg cyl  disp  hp drat   wt  qsec vs am gear carb
+## Hornet Sportabout 18.7   8 360.0 175 3.15 3.44 17.02  0  0    3    2
+## Valiant           18.1   6 225.0 105 2.76 3.46 20.22  1  0    3    1
+## Duster 360        14.3   8 360.0 245 3.21 3.57 15.84  0  0    3    4
+## Merc 240D         24.4   4 146.7  62 3.69 3.19 20.00  1  0    4    2
+## Merc 230          22.8   4 140.8  95 3.92 3.15 22.90  1  0    4    2
+## Merc 280          19.2   6 167.6 123 3.92 3.44 18.30  1  0    4    4</code></pre>
+</div>
+<p><strong>Example 2: <em>rows</em> is a vector of <em>logical values</em>:</strong></p>
+<div class="indented2">
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>mtcars[<span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,</span>
+<span id="cb17-2"><a href="#cb17-2"></a>         <span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>         <span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>         <span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>), ]</span></code></pre></div>
+<pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<p><strong>Example 3: <em>rows</em> is an <em>expression</em> that returns a vector of <em>logical values</em>:</strong></p>
+<div class="indented2">
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>mtcars[ mtcars<span class="op">$</span>cyl <span class="op">==</span><span class="st"> </span><span class="dv">4</span>, ] </span></code></pre></div>
+<pre><code>##                 mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230       22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Fiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<p><strong>Example 4: <em>columns</em> can be a vector of <em>integers</em>, <em>logicals</em>, or <em>column names</em>:</strong></p>
+<div class="indented2">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>mtcars[ mtcars<span class="op">$</span>cyl <span class="op">==</span><span class="st"> </span><span class="dv">4</span>, <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;wt&quot;</span>)] </span></code></pre></div>
+<pre><code>##                 mpg cyl  disp    wt
+## Datsun 710     22.8   4 108.0 2.320
+## Merc 240D      24.4   4 146.7 3.190
+## Merc 230       22.8   4 140.8 3.150
+## Fiat 128       32.4   4  78.7 2.200
+## Honda Civic    30.4   4  75.7 1.615
+## Toyota Corolla 33.9   4  71.1 1.835
+## Toyota Corona  21.5   4 120.1 2.465
+## Fiat X1-9      27.3   4  79.0 1.935
+## Porsche 914-2  26.0   4 120.3 2.140
+## Lotus Europa   30.4   4  95.1 1.513
+## Volvo 142E     21.4   4 121.0 2.780</code></pre>
+</div>
+</div>
+<div id="other-common-manipulations-base-r" class="slide section level1">
+<h1>Other common manipulations {base R}</h1>
+<table class="tbl_compact table table-condensed" style>
+<tbody>
+<tr>
+<td style="text-align:left;width: 20em; ">
+append rows
+</td>
+<td style="text-align:left;font-family: monospace;">
+rbind()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 20em; ">
+combine data frames
+</td>
+<td style="text-align:left;font-family: monospace;">
+cbind()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 20em; ">
+add new columns
+</td>
+<td style="text-align:left;font-family: monospace;">
+transform()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 20em; ">
+join data frames based on common field
+</td>
+<td style="text-align:left;font-family: monospace;">
+merge()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 20em; ">
+sort rows
+</td>
+<td style="text-align:left;font-family: monospace;">
+x[order(x$col_to_sort_on),]
+</td>
+</tr>
+</tbody>
+</table>
+<p>We will <strong>not</strong> go over these Base R functions, but see the tutorials on the <a href="../resources.html" target="_blank">Resources</a> page.</p>
+</div>
+<div id="r-notebook-exercise" class="slide section level1">
+<h1>R Notebook Exercise</h1>
+<p><p><span style='color:olive;'>nb_tables101_scgis21.Rmd</span><br/><span style='font-size:80%; font-style:italic;'>Base R functions to work with data frames</span></p> <div class="indented2" style="font-style:italic; font-size:90%; border:1px dashed lightgray; width:600px; overflow:hidden; padding:10px;"> <img src="images/download-rmd-btn_140x136x256.png" style="float:right; padding:5px; width:140px; height:136px;"/> <p>If you don't have it, you can get it <a href="https://ucanr-igis.github.io/rspatial_data/nb_tables101_scgis21.nb.html" target="_blank" rel="noopener" style="font-weight:bold;">here</a>.</p><p>Click the 'code' button in the upper-right and select 'Download Rmd'.</p> <p>View <a href='https://ucanr-igis.github.io/rspatial_data/nb_tables101_scgis21_ans.nb.html' target='_blank'>Answer</a>.</p> </div></p>
+</div>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<p>The most common class for storing tabular data in R is the <strong>data frame</strong></p>
+<div class="indented2">
+<p>- matrices are like data frames but don’t have named columns<br />
+- tibbles are data frames that print nicer</p>
+</div>
+<p>View the first few rows of a data frame with <strong><code>head()</code></strong></p>
+<p>View an entire data frame with <strong><code>View()</code></strong></p>
+<p>Grab an individual column with <strong><code>$</code></strong></p>
+<p>Grab specific rows and columns with <span style="font-weight:bold; font-family:monospace;">my_df[<em>rows-expression</em>, <em>cols-expression</em>]</span></p>
+<div class="indented2">
+where <em>rows-expression</em> and <em>cols-expression</em> are a vector of:
+<div class="indented2">
+integers<br />
+logicals (TRUE / FALSE)<br />
+column names
+</div>
+</div>
+<p>
+<br/>
+<hr/>
+<strong>Next: </strong> <a href="dplyr-data-wrangling.html">Manipulating Tables with dplyr</a>
+</p>
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>

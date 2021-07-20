@@ -405,13 +405,13 @@ if (length(pkgs_missing)) install.packages(pkgs_missing, dependencies=TRUE)</cod
 <p><br />
 </p>
 <p>5. <strong>Set the working directory in RStudio to the workshop folder</strong></p>
-<p>In RStudio, set the working directory to workshop folder you just created. For example if you created a folder on the desktop, you can run the <code>setwd()</code> command (substituting your <strong>own folder location</strong>, of course!):</p>
+<p>In RStudio, set the working directory to workshop folder you just created. For example if you’re on Windows and you created a workshop folder on the desktop, you can run the <code>setwd()</code> command with a path that looks like the following (substituting your <strong>own folder location</strong>, of course!):</p>
 <pre class="r klippy copyme"><code>## Example of setting the working directory:
 setwd(&quot;C:\\Users\\Andy\\Desktop\\Spatial R Workshop&quot;)</code></pre>
 <p><br />
 </p>
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
-<strong>Windows users</strong>: please note that R requires you to use double-backslashes in path names.
+<strong>Windows users</strong>: please note that R requires you to use double-backslashes in path names (as shown above). You can also use forward slashes.
 </p>
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
 <strong>TIP</strong>: An alternative (&amp; easier) way to set the working directory is to goto the RStudio menu and select Session &gt;&gt; Set Working Directory &gt;&gt; Choose Directory.
@@ -428,6 +428,7 @@ setwd(&quot;C:\\Users\\Andy\\Desktop\\Spatial R Workshop&quot;)</code></pre>
 <p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px; background-color:#eee;">
 <strong>Manual Method</strong>: You can manually download the data from <a href="http://bit.ly/rspatial-data">here</a>. Unzip the ‘data’ folder to the workshop folder.
 </p>
+<p>You do not have to download the data if you’re using <a href='https://rstudio.cloud/project/2709500' target='_blank' ref='noopener' style='font-family:monospace;'>RStudio Cloud</a>. It’s already there!</p>
 <p><br />
 </p>
 <p>7. <strong>Create a Test Plot</strong></p>
