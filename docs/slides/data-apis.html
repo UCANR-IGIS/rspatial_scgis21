@@ -355,8 +355,7 @@ file:///D:/Workshops/R-Spatial/rspatial_mod/outputs/rspatial_bgs20/docs/slides/1
 <p>Let’s download and plot the District boundaries and DEM for Zambia.</p>
 <div class="indented2 indented2r">
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>zmb_alt &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">getData</span>(<span class="dt">name=</span><span class="st">&quot;alt&quot;</span>, <span class="dt">country=</span><span class="st">&quot;ZMB&quot;</span>, <span class="dt">mask=</span><span class="st">&quot;TRUE&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning in showSRID(uprojargs, format = &quot;PROJ&quot;, multiline = &quot;NO&quot;, prefer_proj = prefer_proj): Discarded
-## datum Unknown based on WGS84 ellipsoid in CRS definition</code></pre>
+<pre><code>## Warning in showSRID(uprojargs, format = &quot;PROJ&quot;, multiline = &quot;NO&quot;, prefer_proj = prefer_proj): Discarded datum Unknown based on WGS84 ellipsoid in CRS definition</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>zmb_districts &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">getData</span>(<span class="dt">name=</span><span class="st">&quot;GADM&quot;</span>, <span class="dt">country=</span><span class="st">&quot;ZMB&quot;</span>, <span class="dt">level=</span><span class="dv">2</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="kw">class</span>(zmb_alt); <span class="kw">class</span>(zmb_districts)</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="kw">plot</span>(zmb_alt, <span class="dt">main=</span><span class="st">&quot;Districts of Zambia&quot;</span>)</span>
@@ -375,7 +374,8 @@ file:///D:/Workshops/R-Spatial/rspatial_mod/outputs/rspatial_bgs20/docs/slides/1
 <h2 id="inaturalist">iNaturalist</h2>
 <p><img src="images/rinat_hex_121x140.png" /></p>
 <p><a href="https://www.inaturalist.org/" target="_blank" rel="noopener">iNaturalist</a> is a global community of naturalists that use the iNaturalist app to share observations and communicate. Over 73m observations to date!</p>
-<p>You can access iNaturalist data via an API client package called [<code>rinat</code>])(<a href="https://docs.ropensci.org/rinat/" class="uri">https://docs.ropensci.org/rinat/</a>){target="_blank" rel=“noopener”}.</p>
+<p>You can access iNaturalist data via the <a href="https://docs.ropensci.org/rinat/" target="_blank" rel="noopener"><code>rinat</code></a> API client package.</p>
+<div class="indented2 indented2r">
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## install.packages(&quot;rinat&quot;)</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="kw">library</span>(rinat)</span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="kw">library</span>(sf)</span>
@@ -388,7 +388,8 @@ file:///D:/Workshops/R-Spatial/rspatial_mod/outputs/rspatial_bgs20/docs/slides/1
 <span id="cb6-10"><a href="#cb6-10"></a></span>
 <span id="cb6-11"><a href="#cb6-11"></a><span class="co">## Plot results</span></span>
 <span id="cb6-12"><a href="#cb6-12"></a><span class="kw">plot</span>(deer_df<span class="op">$</span>longitude, deer_df<span class="op">$</span>latitude)</span></code></pre></div>
-<p><img src="data-apis_files/figure-slidy/unnamed-chunk-1-1.png" width="768" /></p>
+<p><img src="data-apis_files/figure-slidy/rinat-1.png" width="768" /></p>
+</div>
 <h2 id="feddata">FedData</h2>
 <p><a href="https://github.com/ropensci/FedData" target="_blank" rel="noopener">FedData</a> is an R package implementing functions to automate downloading geospatial data available from several federated data sources, including:</p>
 <div class="indented2 singlespace">
@@ -455,7 +456,7 @@ ca_breweries_df &lt;- read.csv(&quot;https://raw.githubusercontent.com/UCANR-IGI
 </div>
 <div id="notebook-exercise" class="slide section level1">
 <h1>Notebook Exercise</h1>
-<p><em>coming soon!</em></p>
+<p><a href="https://raw.githubusercontent.com/UCANR-IGIS/rspatial_data/master/rinat_test.R" class="uri">https://raw.githubusercontent.com/UCANR-IGIS/rspatial_data/master/rinat_test.R</a></p>
 <!------
 # Notebook Exercise (outline)
 
@@ -542,7 +543,7 @@ Download a zip into temp space. Unzip it.
 <p>
 <br/>
 <hr/>
-<strong>Next: </strong> <a href="spatial-queries.html">Spatial Queries</a>
+<strong>Next: </strong> <a href="geoprocessing.html">Geoprocessing 1</a>
 </p>
 </div>
 
