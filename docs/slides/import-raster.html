@@ -519,6 +519,7 @@ Importing and Plotting Raster Data <br/><img src='images/hillshade_408x200.png'/
 <h1>Plotting rasters with tmap</h1>
 <p>You can render rasters in a tmap plot using <code>tm_raster()</code>. As with other tmap functions that draw features, the data source must come before in a <code>tm_shape()</code> function.</p>
 <p>Plot the DEM with the YNP boundary:</p>
+<div class="indented1 indented1r">
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">library</span>(tmap)</span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
 <pre><code>## tmap mode set to plotting</code></pre>
@@ -537,6 +538,7 @@ Importing and Plotting Raster Data <br/><img src='images/hillshade_408x200.png'/
 ## Bounding box:  xmin: -119.8864 ymin: 37.4947 xmax: -119.1964 ymax: 38.18515
 ## Geodetic CRS:  North_American_Datum_1983</code></pre>
 <p><img src="import-raster_files/figure-slidy/plot_strm_tmap-1.png" width="768" /></p>
+</div>
 <p>This plot reveals this raster is much too big for our study area (not-uncommon). We’ll deal with this in the next section by <strong>cropping</strong> it.</p>
 <div class="tip">
 <p>Plot multi-band rasters in tmap using <code>tm_rgb()</code>.</p>
@@ -584,7 +586,7 @@ Importing and Plotting Raster Data <br/><img src='images/hillshade_408x200.png'/
 </div>
 <div id="r-notebook-exercise" class="slide section level1">
 <h1>R Notebook Exercise</h1>
-<p><p>Open <span style='font-style:italic;'>nb_import-raster_scgis21.Rmd</span></p> <div class="indented2" style="font-style:italic; font-size:90%; border:1px dashed lightgray; width:600px; overflow:hidden; padding:10px;"> <img src="images/download-rmd-btn_140x136x256.png" style="float:right; padding:5px; width:140px; height:136px;"/> <p>If you don't have it, you can get it <a href="https://ucanr-igis.github.io/rspatial_data/nb_import-raster_scgis21.nb.html" target="_blank" rel="noopener" style="font-weight:bold;">here</a>.</p><p>Click the 'code' button in the upper-right and select 'Download Rmd'.</p> </div></p>
+<p><p><a href='https://raw.githubusercontent.com/ucanr-igis/rspatial_data/master/nb_import-raster_scgis21.Rmd' target='_blank'>nb_import-raster_scgis21.Rmd</a><br/><span style='font-size:80%; font-style:italic;'>Import raster data into R</span></p> <p style='font-size:80%;'><a href='https://ucanr-igis.github.io/rspatial_data/nb_import-raster_scgis21.nb.html' target='_blank' rel='noopener' style='color:#8993d3;'>preview notebook</a> | <a href='https://ucanr-igis.github.io/rspatial_data/nb_import-raster_scgis21_ans.nb.html' target='_blank' style='color:#8993d3;'>answer key</a></p></p>
 </div>
 <div id="summary" class="slide section level1">
 <h1>Summary</h1>
@@ -616,7 +618,7 @@ Importing and Plotting Raster Data <br/><img src='images/hillshade_408x200.png'/
 <p>
 <br/>
 <hr/>
-<strong>Next: </strong> <a href="sf-manip.html">Common Manipulations for sf Objects</a>
+<strong>Next: </strong> <a href="nb_map-ynp_scgis21.html">Wrapup Exercise #1: Map Yosemite</a>
 </p>
 </div>
 
