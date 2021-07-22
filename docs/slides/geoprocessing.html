@@ -742,43 +742,6 @@ symmetric difference (xor, union w/o intersection)
 </div>
 <!--- info-box --->
 </div>
-<div id="voronoi-tesselation" class="slide section level1">
-<h1>Voronoi Tesselation</h1>
-<p>For a given a set of points, Voronoi tesselation computes a network of polygons, such that each polygon contains exactly one point and everywhere within a polygon is closest to the enclosed point.</p>
-<p><img src="images/voronoi-diagram_220x220.png" /></p>
-<p>Let’s build Voronoi polygons for the campgrounds. These polygons could be thought of as the ‘catchment area’ of each campgrounds, if campgrounds were like magnets trying to attract campers.</p>
-<p>We can create a Voronoi tessellation using <tt><strong>st_voronoi()</strong></tt>. Note <tt>st_voronoi()</tt> expects a single multipart point feature, which you can create from a point layer using <tt><strong>st_union()</strong></tt>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">## Compute Voronoi polygons</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>v &lt;-<span class="st"> </span><span class="kw">st_voronoi</span>(<span class="kw">st_union</span>(yose_campgrnds_utm))</span>
-<span id="cb29-3"><a href="#cb29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4"></a><span class="co">## Construct polygon sf and simplify (i.e., break multipart into single features)</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a>v_sf &lt;-<span class="st">  </span><span class="kw">st_sf</span>(v) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_cast</span>()</span>
-<span id="cb29-6"><a href="#cb29-6"></a></span>
-<span id="cb29-7"><a href="#cb29-7"></a><span class="co">## Plot</span></span>
-<span id="cb29-8"><a href="#cb29-8"></a><span class="kw">plot</span>(v_sf <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>() , <span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;gray70&quot;</span>)</span>
-<span id="cb29-9"><a href="#cb29-9"></a><span class="kw">plot</span>(yose_bnd_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;darkblue&quot;</span>)</span>
-<span id="cb29-10"><a href="#cb29-10"></a><span class="kw">plot</span>(yose_campgrnds_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">cex=</span><span class="dv">1</span>, <span class="dt">pch=</span><span class="dv">17</span>, <span class="dt">add=</span>T)</span></code></pre></div>
-<p><img src="geoprocessing_files/figure-slidy/voronoi_polys_klippy-1.png" width="768" /></p>
-<div class="tryit">
-<p>Modify the above so the Voronoi polygons are clipped to the park boundary.</p>
-<p>[<span id="soln_kfzqvh" class="showhidesoln" onclick="showHide(&#39;kfzqvh&#39;);return false;">Solution</span>]</p>
-<div id="kfzqvh" class="hint">
-<div class="sourceCode" id="cb30"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">## Clip to the park boundary</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>v_clipped &lt;-<span class="st"> </span>v_sf <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersection</span>(yose_bnd_utm)</span>
-<span id="cb30-3"><a href="#cb30-3"></a></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="kw">plot</span>(v_clipped <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>() , <span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;gray70&quot;</span>)</span>
-<span id="cb30-5"><a href="#cb30-5"></a><span class="kw">plot</span>(yose_bnd_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;darkblue&quot;</span>)</span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="kw">plot</span>(yose_campgrnds_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">cex=</span><span class="dv">1</span>, <span class="dt">pch=</span><span class="dv">17</span>, <span class="dt">add=</span>T)</span></code></pre></div>
-<p><img src="geoprocessing_files/figure-slidy/voronoi_clipped_klippy-1.png" width="768" /></p>
-</div>
-<!--- soln_kfzqvh --->
-</div>
-<!--- TryIt --->
-<div class="challenge">
-<p>Create Voronoi polygons for the cell tower infrastructure</p>
-</div>
-<!--- challenge --->
-</div>
 <div id="summary" class="slide section level1">
 <h1>Summary</h1>
 <p>Today we saw how to:</p>
@@ -816,7 +779,7 @@ symmetric difference (xor, union w/o intersection)
   <br/>
   <hr/>
   <strong>Next: </strong>
-  <a href="geoprocessing2.html">Geoprocessing Pt2</a>
+  <a href="geoprocessing2.html">Geoprocessing 2</a>
 </p>
 ------------------>
 </div>

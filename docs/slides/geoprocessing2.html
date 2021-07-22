@@ -285,10 +285,10 @@ Geoprocessing 2<br/><img src='images/geoprocessing256_498x166.png'/>
 ## 6    40 SAN JOAQUIN RIVER              6     8911. ((61771.61 -47929.25, 61796.63 -48002.35, 61803.31 -48129.88, 61801.05 -48214.62, 61807.2...</code></pre>
 <p><img src="geoprocessing2_files/figure-slidy/watershed_summarise_union_klippy-1.png" width="768" /></p>
 </div>
-<div id="example-buffer-union-clip-yosemite-roads" class="slide section level1">
-<h1>Example: Buffer, Union, &amp; Clip Yosemite Roads</h1>
-<p>In this example, we’ll create a 500m buffer around the roads within the park (representing a disturbance zone for sensitive species, or drive transect detection area). Then we’ll compute the total area of the buffered area. This task will require us to <strong>buffer</strong>, <strong>intersect</strong>, and <strong>union</strong>.</p>
-<p>First, create the buffer:</p>
+<div id="geoprocessing-chains" class="slide section level1">
+<h1>Geoprocessing Chains</h1>
+<p>What percentage of Yosemite falls within 500m of a road?</p>
+<p>We first create a 500m buffer around the roads within the park (representing a disturbance zone for sensitive species, or drive transect detection area). Then we’ll compute the total area of the buffered area. This task will require us to <strong>buffer</strong>, <strong>intersect</strong>, <strong>union</strong>, and another <strong>intersection</strong>. This is known as a geoprocessing chain. . First, create the buffer:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## Create the buffer</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>yose_roads_buff &lt;-<span class="st"> </span>yose_roads <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_buffer</span>(<span class="dt">dist=</span><span class="dv">500</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
@@ -331,8 +331,8 @@ Geoprocessing 2<br/><img src='images/geoprocessing256_498x166.png'/>
 </div>
 <!--- TryIt --->
 </div>
-<div id="example-voronoi-tesselation" class="slide section level1">
-<h1>Example: Voronoi tesselation</h1>
+<div id="voronoi-tesselation" class="slide section level1">
+<h1>Voronoi Tesselation</h1>
 <p>For a given a set of points, Voronoi tesselation computes a network of polygons, such that each polygon contains exactly one point and everywhere within a polygon is closest to the enclosed point.</p>
 <p><img src="images/voronoi-diagram_220x220.png" /></p>
 <p>Let’s build Voronoi polygons for the campgrounds. These polygons could be thought of as the ‘catchment area’ of each campgrounds, if campgrounds were like magnets trying to attract campers.</p>
