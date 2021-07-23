@@ -1,2 +1,6 @@
-# rspatial_scgis21
- Spatial R Workshop SCGIS 2021
+# Spatial Analysis in R 
+
+These are slides for the Spatial Analysis in R workshop at the Society for Conservation GIS 2021 Annual Conference. 
+
+
+
