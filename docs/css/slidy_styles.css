@@ -520,15 +520,22 @@ p.exercises_desc {
   font-style:italic;
   font-size:90%;
 }
-
 .copyme {
   background-color:#e6fee6;
 }
-
 .sample_code {
   background-color:transparent;
   margin-left: 2em;
   border: 2px solid lightgray;
+}
+div.nb_desc {
+  font-size:80%; 
+  font-style:italic; 
+  line-height:1.3em; 
+  margin-left:1em;
+}
+div.nb_desc > ol > li {
+  line-height:1.2em;
 }
 
 /* ======== No longer used ==============

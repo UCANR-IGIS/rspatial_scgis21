@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="Raster Anslyses  " />
+  <meta name="author" content="Raster Analyses  " />
   <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href=' https://etherpad.wikimedia.org/p/rspatial-scgis2021 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ucanr-igis.github.io/rspatial_scgis21/ '> https://ucanr-igis.github.io/rspatial_scgis21/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
   <meta name="font-size-adjustment" content="2"/>
   <title>Spatial Data Analysis with R  Society for Conservation GIS, July 2021</title>
@@ -233,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="slide titlepage">
   <h1 class="title"><span class="course-title">Spatial Data Analysis with R </span><br/><span class="course-subtitle">Society for Conservation GIS, July 2021</span></h1>
   <p class="author">
-Raster Anslyses <br/><img src='images/map-algebra256_250x220.png'/>
+Raster Analyses <br/><img src='images/map-algebra256_250x220.png'/>
   </p>
 </div>
 <div id="raster-analyses" class="slide section level1">
@@ -451,9 +451,10 @@ time series analysis
 </div>
 <p>Raster algebra is used in many, many analyses. It’s particularly useful with binary masks, as it gives you many options to combine separate criteria (e.g., binary or ranked, apply weights, etc).</p>
 <p><em>Syntax</em>: <tt>rast1 + rast2 - rast3 * rast4 / rast5</tt></p>
-<p>MCA - show the list of raster algebra functions sect 4 vignette</p>
+<h2 id="multiple-criteria-analaysis">Multiple Criteria Analaysis</h2>
+<p>See the list of raster algebra functions sect 4 of the vignette</p>
 <p><em>Notes</em></p>
-<p>In this example, we multiplied the two masks together because the rules specified that <em>both</em> conditions were required. An altnernative approach could be to <em>add</em> raster masks together so that the pixel values in the output reflect a ranking based on the number of criteria satisfied.</p>
+<p>In this example, we multiplied the two masks together because the rules specified that <em>both</em> conditions were required. An alternative approach could be to <em>add</em> raster masks together so that the pixel values in the output reflect a ranking based on the number of criteria satisfied.</p>
 <p>For large datasets and/or more complex combinations, the <em>overlay()</em> function may have better performance.</p>
 <h2 id="example-identify-steep-slopes-in-yosemite">Example: identify steep slopes in Yosemite</h2>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>yosem_slope &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;~/yosemite_slope.tif&quot;</span>)</span>
@@ -493,9 +494,10 @@ time series analysis
 </div>
 <div id="additional-resources" class="slide section level1">
 <h1>Additional Resources</h1>
+<div class="indented1">
 <p><a href="https://rspatial.org/spatial/8-rastermanip.html" target="_blank">Raster data manipulation</a>, book chapter by Robert Hijmans</p>
 <p><a href="https://www.neonscience.org/raster-time-series" target="_blank">Working With Raster Time Series Data in R</a>, NEON Science</p>
-<a href="https://earthdatascience.org/courses/earth-analytics/multispectral-remote-sensing-data/naip-imagery-raster-stacks-in-r/" target="_blank"><em>How to Open and Work With Multispectral Imagery in R</em></a>
+<p><a href="https://earthdatascience.org/courses/earth-analytics/multispectral-remote-sensing-data/naip-imagery-raster-stacks-in-r/" target="_blank"><em>How to Open and Work With Multispectral Imagery in R</em></a></p>
 </div>
 </div>
 

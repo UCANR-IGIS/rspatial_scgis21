@@ -595,7 +595,7 @@ POLYGON ((1 0, 3 4, 5 1, 1 0))
 </div>
 </div>
 <div id="converting-sf-sp" class="slide section level1">
-<h1>Converting sf → sp</h1>
+<h1>Converting sf ↔︎ sp</h1>
 <p>If you need to convert a sf object to a sp object (for backwards compatibility, for example), use <code>as(x, "Spatial")</code>:</p>
 <p>Example:</p>
 <div class="indented1 indented1r">
@@ -603,6 +603,15 @@ POLYGON ((1 0, 3 4, 5 1, 1 0))
 <span id="cb23-2"><a href="#cb23-2"></a>yose_fires_sp &lt;-<span class="st"> </span><span class="kw">as</span>(yose_fires_pt, <span class="st">&quot;Spatial&quot;</span>)</span>
 <span id="cb23-3"><a href="#cb23-3"></a><span class="kw">class</span>(yose_fires_sp)</span></code></pre></div>
 </div>
+<div class="infobox">
+<p>See also:</p>
+<div class="indented2">
+<ul>
+<li><a href="https://geocompr.github.io/post/2021/spatial-classes-conversion/" target="_blank" rel="noopener"><em>Conversions between different spatial classes in R</em></a>, by Jakub Nowosad &amp; Robin Lovelace</li>
+</ul>
+</div>
+</div>
+<!--- infobox --->
 </div>
 <div id="summary" class="slide section level1">
 <h1>Summary</h1>
@@ -615,9 +624,9 @@ POLYGON ((1 0, 3 4, 5 1, 1 0))
 </li>
 <li>(re)project sf objects with <tt>st_transform()</tt><br />
 </li>
-<li>convert a <tt>sf</tt> object into a <tt>sp</tt> object and vice-versa<br />
-</li>
 <li>export sf objects to standard GIS file formats<br />
+</li>
+<li>convert a <tt>sf</tt> object into a <tt>sp</tt> object and vice-versa<br />
 </li>
 </ul>
 </div>

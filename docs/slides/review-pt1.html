@@ -245,6 +245,8 @@ Session 1 Review <br/><img src='images/computer_review_414x300.png'/>
 <code>class(pop_2010)</code>
 </div>
 </div>
+<p><br />
+</p>
 <h2 id="packages">Packages</h2>
 <div class="indented2">
 <p><strong>packages</strong> are the key to productivity with R</p>
@@ -255,7 +257,56 @@ Session 1 Review <br/><img src='images/computer_review_414x300.png'/>
 <p><strong>load</strong> packages into memory with <strong><code>library()</code></strong></p>
 <p>to prevent clashes with duplicate function names, specify the package using the <code>pkgname::</code> prefix (e.g., <code>dplyr::filter()</code>), or indicate your preferences using the <strong><code>conflicted</code></strong> package</p>
 </div>
-<h2 id="code-recipes">Code Recipes</h2>
+<p><br />
+</p>
+<h2 id="importing-and-plotting-vector-data"><a href="import-vector.html">Importing and Plotting Vector Data</a></h2>
+<div class="indented2">
+<p>sf data frames are essentially regular data frames with a <strong>‘geometry’</strong> column</p>
+<p><strong>import</strong> GIS data with: <tt>st_read(<em>source</em>, <em>layer</em>)</tt></p>
+<div class="indented2">
+<p>where <em>source</em> can be a:</p>
+<div class="compact">
+<ul>
+<li>a folder (e.g, containing Shapefiles, geodatabase)<br />
+</li>
+<li>file (e.g., geojson file, KML file)<br />
+</li>
+<li>database connection string (e.g., “PG:dbname=postgis”)<br />
+</li>
+</ul>
+</div>
+<p><em>layer</em> is a named layer</p>
+</div>
+<p>view layers in a source with <code>st_layers()</code></p>
+<p>code to import Shapefiles, KMLs, GeoJSON, Geodatabase, GeoPackage</p>
+<p><code>st_as_sf()</code> to convert plain data frames into sf data frames</p>
+<p><code>plot()</code> works with sf objects</p>
+<div class="compact">
+<ul>
+<li>to plot just the outline try: <code>plot(ca_counties %&gt;% st_geometry())</code><br />
+</li>
+<li>to alter symbology by an attribute field use <code>plot(ca_counties["col_name"])</code><br />
+</li>
+</ul>
+</div>
+<p><code>tmap</code> makes nicer maps</p>
+<div class="indented2" style="width:50%;">
+<pre><code>tm_shape(yose_bnd_ll) +
+  tm_polygons() +    
+tm_shape(yose_hp_ll) +
+  tm_symbols() +  
+...
+  </code></pre>
+</div>
+<p><br />
+</p>
+<h2 id="importing-and-plotting-raster-data"><a href="import-raster.html">Importing and Plotting Raster Data</a></h2>
+<p><code>raster()</code> and <code>brick()</code> to import raster files</p>
+<p><code>crop()</code> to crop a raster</p>
+</div>
+</div>
+<div id="code-recipes" class="slide section level1">
+<h1>Code Recipes</h1>
 <div class="compact">
 <ul>
 <li>Introduction to R Notebooks<br />
@@ -281,11 +332,11 @@ Session 1 Review <br/><img src='images/computer_review_414x300.png'/>
 <h1>Download Today’s Notebooks</h1>
 <p>Make sure your working directory is the workshop folder, then:</p>
 <div class="indented1 indented1r">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>zip_url &lt;-<span class="st"> &quot;https://github.com/ucanr-igis/rspatial_data/raw/master/scgis21_nb_sect02.zip&quot;</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>temp_fn &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">download.file</span>(zip_url, <span class="dt">destfile=</span>temp_fn, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">unzip</span>(temp_fn, <span class="dt">exdir =</span> <span class="st">&quot;.&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">unlink</span>(temp_fn)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>zip_url &lt;-<span class="st"> &quot;https://github.com/ucanr-igis/rspatial_data/raw/master/scgis21_nb_sect02.zip&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>temp_fn &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">download.file</span>(zip_url, <span class="dt">destfile=</span>temp_fn, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">unzip</span>(temp_fn, <span class="dt">exdir =</span> <span class="st">&quot;.&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">unlink</span>(temp_fn)</span></code></pre></div>
 </div>
 <p>Look in the ‘Files’ pane to make sure they’re there!</p>
 </div>
@@ -295,7 +346,7 @@ Session 1 Review <br/><img src='images/computer_review_414x300.png'/>
 <p>
 <br/>
 <hr/>
-<strong>Next: </strong> <a href="sf-manip.html">Common Manipulations for sf Objects</a>
+<strong>Next: </strong> <a href="sf-manip.html">Manipulating sf Objects</a>
 </p>
 </div>
 
